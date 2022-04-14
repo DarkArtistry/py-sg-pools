@@ -49,9 +49,9 @@ class PyToto:
             print("number is already picked!")
             number = input("Pick a number: ")
             number = int(number)
-
-        number_index = self.toto_numbers.index(number)
-        self.toto_numbers.pop(number_index)
+        if number in self.toto_numbers:
+            number_index = self.toto_numbers.index(number)
+            self.toto_numbers.pop(number_index)
         return number
 
     def self_pick_board(self, count, in_toto_numbers):
@@ -62,6 +62,10 @@ class PyToto:
             if number_picked not in temp_board:
                 temp_board.append(number_picked)
 
+        for number in temp_board:
+            if number in self.toto_numbers:
+                number_index = self.toto_numbers.index(number)
+                self.toto_numbers.pop(number_index)
         print("current_board ({}): \n {}".format(len(temp_board), temp_board))
         self.current_board = temp_board
         pass
@@ -127,6 +131,9 @@ class PyToto:
             self.pretty_print_toto_numbers(True)
             print()
             in_toto_numbers = input("pick only from unpicked numbers? True/False: ")
+            while in_toto_numbers not in ["True", "False"]:
+                in_toto_numbers = input("pick only from unpicked numbers? True/False: ")
+
             if in_toto_numbers == "True":
                 in_toto_numbers = True
             else:
@@ -142,6 +149,7 @@ class PyToto:
             print("Amount left: {}".format(self.budget))
             print()
         print()
+        self.pretty_print_toto_numbers(True)
         print("Your bets are:")
         for board in self.gambling_slip:
             print(board)
