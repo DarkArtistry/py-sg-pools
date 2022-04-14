@@ -41,6 +41,7 @@ class PyToto:
         print(np_arr)
     
     def self_pick_number(self, in_toto_numbers):
+        print()
         self.pretty_print_toto_numbers(in_toto_numbers)
         number = input("Pick a number: ")
         number = int(number)
@@ -78,6 +79,11 @@ class PyToto:
             temp_number = random.choice(numbers_to_pick_from)
             if temp_number not in temp_board:
                 temp_board.append(temp_number)
+
+        for number in temp_board:
+            if number in self.toto_numbers:
+                number_index = self.toto_numbers.index(number)
+                self.toto_numbers.pop(number_index)
 
         print('randomnized board ({}): {}'.format(len(temp_board), temp_board))
         self.current_board = temp_board
@@ -133,6 +139,8 @@ class PyToto:
 
             self.budget = self.budget - cost
             self.gambling_slip.append(self.current_board)
+            print("Amount left: {}".format(self.budget))
+            print()
         print()
         print("Your bets are:")
         for board in self.gambling_slip:
